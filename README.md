@@ -17,7 +17,7 @@ here is the thin layer, not the catalog underneath it:
 | Component | Status | First commit |
 | --- | --- | --- |
 | The Dim Hour **MCP server** (`mcp.dimhour.com`) these tools call | **PRIOR WORK** | 2026-06-05 |
-| The **catalog** they read — 20,130 venues across 22 cities | **PRIOR WORK**, built over months |
+| The **catalog** they read — more than 19,000 places across 24 cities (the live site's own claim) | **PRIOR WORK**, built over months |
 | The **booking-platform table** (`booking-prefill.js`) that resolves Resy / OpenTable / SevenRooms / Tock | **PRIOR WORK** | 2026-08-11 |
 | The **`/tonight` rule** these tools reuse (`tonight-pool.cjs`) | **PRIOR WORK** | 2026-08-25 |
 | **`webmcp.js`** — this file | **NEW** | 2026-09-03 |
@@ -26,8 +26,9 @@ here is the thin layer, not the catalog underneath it:
 So: the server, the data and the booking table are not new. The WebMCP adapter is. Every
 commit in this repo is dated, and the two new pieces above are the whole of the submission.
 
-The venue count is measured, not estimated: `city-catalog.cjs` summed across all 22 city
-shards on 2026-09-03.
+The headline numbers are the live site's own public claim (dimhour.com: "more than 19,000
+places" across 24 cities), so this README, the Devpost submission and the site all say the
+same thing.
 
 ---
 
