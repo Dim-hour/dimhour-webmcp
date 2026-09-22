@@ -201,7 +201,7 @@
          CANDIDATES individually. That is the "client-side over get_venue hours,
          top N candidates only" shape, and the N exists because it costs one
          request each. */
-      var CANDIDATES = Math.min(Math.max(want * 3, 9), 15);
+      var CANDIDATES = Math.min(Math.max(want * 3, 9), MAX_RESULTS);
       return rpc('search_venues', clean({
         city: i.city, query: i.query, limit: CANDIDATES,
       }), signal).then(function (d) {
