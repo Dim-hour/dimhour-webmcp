@@ -51,7 +51,13 @@
    * (it is also the whole of the public dimhour-webmcp repo) and tonight-pool is
    * CommonJS. scripts/guard-webmcp-tonight-parity.cjs fails if the two drift. */
   var FB_KINDS = { restaurant: 1, bar: 1, cafe: 1 };
-  var LATE_RE = /(1[0-2]|[1-9])\s*am\b|midnight|\blate\b/i;
+  /* Corrected 2026-09-03 with the module (#1583): the old pattern asked whether
+     an a.m. hour appeared ANYWHERE in the hours string, which an OPENING time
+     also is — "Mon-Sun 8AM-5PM" read as a late kitchen. 6,698 of 10,873 flagged
+     venues were wrong, and 476 genuinely late ones were missed because
+     "12:00am" never matched. An a.m. hour now counts only where it CLOSES a
+     range, and only 12am-5am. */
+  var LATE_RE = /(?:[-–—]|\bto\b|\buntil\b|\btill?\b)\s*(?:12|[1-5])(?::[0-5]\d)?\s*a\.?m\.?\b|\bmidnight\b|\b(?:24\s*h(?:ou)?rs?|open\s*24)\b|\blate\b/i;
   /* ⚠️ TWO FIELD NAMES FOR ONE FACT. The catalog calls it `hh`; the MCP server
      renames it `happy_hour` on the way out. Reading only `hh` — which is what
      tonight-pool does, correctly, against the catalog — made this filter match
@@ -303,11 +309,11 @@
    */
   var CITY_GLOBALS = { dallas: 'DALLAS_DATA', nyc: 'NYC_DATA', austin: 'AUSTIN_DATA',
     houston: 'HOUSTON_DATA', chicago: 'CHICAGO_DATA', la: 'LA_DATA', miami: 'MIAMI_DATA',
-    sf: 'SF_DATA', seattle: 'SEATTLE_DATA', vegas: 'VEGAS_DATA', phoenix: 'PHOENIX_DATA',
+    sf: 'SF_DATA', seattle: 'SEATTLE_DATA', vegas: 'LV_DATA', phoenix: 'PHX_DATA',
     dc: 'DC_DATA', toronto: 'TORONTO_DATA', nashville: 'NASHVILLE_DATA', slc: 'SLC_DATA',
-    charlotte: 'CHARLOTTE_DATA', sandiego: 'SANDIEGO_DATA', sanantonio: 'SANANTONIO_DATA',
+    charlotte: 'CHARLOTTE_DATA', sandiego: 'SD_DATA', sanantonio: 'SANANTONIO_DATA',
     neworleans: 'NEWORLEANS_DATA', mexicocity: 'MEXICOCITY_DATA', portland: 'PORTLAND_DATA',
-    newmexico: 'NEWMEXICO_DATA' };
+    newmexico: 'NM_DATA' };
 
   /** The catalog row for city/id, if this page happens to have that city loaded. */
   function localRow(city, id) {
