@@ -98,11 +98,10 @@ server renames it `happy_hour`. Filtering search rows therefore tests fields tha
 there and returns an empty list *forever*, in a sentence that reads like a real answer. This
 was a real bug in the first version: 0 of 25 candidates, every time.
 
-**Known inherited defect:** the `/tonight` late-close rule matches any a.m. time, so an
-*opening* time reads as a late close (a venue open `8am-6pm` counts as a late kitchen).
-Measured across the catalog: 10,873 venues match the rule and 6,996 of them (64%) match only
-on a morning opening. This file mirrors the site's rule faithfully rather than forking it, so
-it inherits that until it is fixed upstream in one place.
+**Late-close rule corrected upstream:** the shared `/tonight` rule now counts only a.m.
+times that close a range (12am-5am), plus midnight, explicit 24-hour language and "late."
+The standalone adapter mirrors that post-#1583 live rule exactly, so an opening time such as
+`8am-6pm` no longer reads as a late kitchen.
 
 ---
 
